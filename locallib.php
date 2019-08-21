@@ -1210,12 +1210,13 @@ function certificate_generate_code() {
     global $DB;
 
     $uniquecodefound = false;
-    $code = random_string(10);
+    // RMS requires year to be included in the code
+    $code = date('Y') . "-" . random_string(5);
     while (!$uniquecodefound) {
         if (!$DB->record_exists('certificate_issues', array('code' => $code))) {
             $uniquecodefound = true;
         } else {
-            $code = random_string(10);
+            $code = date('Y') . "-" . random_string(5);
         }
     }
 
